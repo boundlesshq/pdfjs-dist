@@ -8232,7 +8232,7 @@ var PDFWorker = function PDFWorkerClosure() {
             }
           };
           var onWorkerError = function onWorkerError(error) {
-            console.warn(error);
+            console.warn(error.message);
 
             if (!_this6._webWorker) {
               terminateEarly();
