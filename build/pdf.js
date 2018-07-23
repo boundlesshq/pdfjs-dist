@@ -8231,7 +8231,9 @@ var PDFWorker = function PDFWorkerClosure() {
               _this6._setupFakeWorker();
             }
           };
-          var onWorkerError = function onWorkerError() {
+          var onWorkerError = function onWorkerError(error) {
+            console.warn(error);
+
             if (!_this6._webWorker) {
               terminateEarly();
             }
