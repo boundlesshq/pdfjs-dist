@@ -124,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 var pdfjsVersion = '2.0.628';
-var pdfjsBuild = '24749d0e';
+var pdfjsBuild = 'a69269fc';
 var pdfjsCoreWorker = __w_pdfjs_require__(1);
 exports.WorkerMessageHandler = pdfjsCoreWorker.WorkerMessageHandler;
 
@@ -21783,15 +21783,23 @@ var ButtonWidgetAnnotation = function (_WidgetAnnotation2) {
   _createClass(ButtonWidgetAnnotation, [{
     key: '_processCheckBox',
     value: function _processCheckBox(params) {
-      if (!(0, _primitives.isName)(this.data.fieldValue)) {
-        return;
+      if ((0, _primitives.isName)(this.data.fieldValue)) {
+        this.data.fieldValue = this.data.fieldValue.name;
       }
       var customAppearance = params.dict.get('AP');
-      if (customAppearance) {
-        var exportValues = customAppearance.get('D').getKeys();
-        this.data.exportValue = exportValues[0] === 'Off' ? exportValues[1] : exportValues[0];
+      if (!(0, _primitives.isDict)(customAppearance)) {
+        return;
       }
-      this.data.fieldValue = this.data.fieldValue.name;
+      var exportValueOptionsDict = customAppearance.get('D');
+      if (!(0, _primitives.isDict)(exportValueOptionsDict)) {
+        return;
+      }
+      var exportValues = exportValueOptionsDict.getKeys();
+      var hasCorrectOptionCount = exportValues.length === 2;
+      if (!hasCorrectOptionCount) {
+        return;
+      }
+      this.data.exportValue = exportValues[0] === 'Off' ? exportValues[1] : exportValues[0];
     }
   }, {
     key: '_processRadioButton',
